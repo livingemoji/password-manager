@@ -3,7 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
 
 jobs:
   build:
@@ -11,19 +10,20 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.0'
+          flutter-version: '3.32.2'
           channel: 'stable'
-          
+      
+      - name: Change directory
+        run: cd password_manager
+      
       - name: Install dependencies
         run: flutter pub get
-        
+      
       - name: Build
         run: flutter build web --release
-        
+      
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
